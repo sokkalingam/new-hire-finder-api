@@ -33,6 +33,9 @@ public class CSVParser {
             contact.setPhone(record.get("phone"));
             contact.setEmail(record.get("email"));
             contact.setJobTitle(record.get("current_role_title"));
+            contact.setAvgTimeInPosition(record.get("log_average_time_in_position"));
+            contact.setChangedAJobLastYear(record.get("changed_a_job_last_year"));
+            contact.setNumJobChangesLast10Years(record.get("num_job_changes_last_10years"));
 //            contact.setLat(record.get("lat"));
 //            contact.setLng(record.get("long"));
             contact.setLat(String.valueOf(RandomUtils.nextDouble(15, 45)));

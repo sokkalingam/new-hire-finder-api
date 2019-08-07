@@ -10,6 +10,9 @@ public class Contact {
     private String jobTitle;
     private String lat;
     private String lng;
+    private String avgTimeInPosition;
+    private String changedAJobLastYear;
+    private String numJobChangesLast10Years;
 
     public String getName() {
         return name;
@@ -73,6 +76,30 @@ public class Contact {
 
     public void setLng(String lng) {
         this.lng = lng;
+    }
+
+    public String getAvgTimeInPosition() {
+        return avgTimeInPosition;
+    }
+
+    public void setAvgTimeInPosition(String avgTimeInPosition) {
+        this.avgTimeInPosition = avgTimeInPosition;
+    }
+
+    public String getChangedAJobLastYear() {
+        return changedAJobLastYear;
+    }
+
+    public void setChangedAJobLastYear(String changedAJobLastYear) {
+        this.changedAJobLastYear = changedAJobLastYear;
+    }
+
+    public String getNumJobChangesLast10Years() {
+        return numJobChangesLast10Years;
+    }
+
+    public void setNumJobChangesLast10Years(String numJobChangesLast10Years) {
+        this.numJobChangesLast10Years = numJobChangesLast10Years;
     }
 
     @Override
