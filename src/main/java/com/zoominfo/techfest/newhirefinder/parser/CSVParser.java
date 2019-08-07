@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -20,6 +23,7 @@ public class CSVParser {
         Reader in = new FileReader("src/main/resources/17k-sample_with_predictions.csv");
         Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
         Collection<Contact> empList = new ArrayList<>();
+
         for (CSVRecord record : records) {
             Contact contact = new Contact();
             // String id = record.get("id");
@@ -33,10 +37,18 @@ public class CSVParser {
 //            contact.setLng(record.get("long"));
             contact.setLat(String.valueOf(RandomUtils.nextDouble(15, 45)));
             contact.setLng("-" + String.valueOf(RandomUtils.nextDouble(55, 85)));
-            contact.setScore(Double.parseDouble(record.get("pred_probability")) * 100);
+            contact.setScore(round(Double.parseDouble(record.get("pred_probability")) * 100, 2));
             empList.add(contact);
         }
 
         return empList;
+    }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
