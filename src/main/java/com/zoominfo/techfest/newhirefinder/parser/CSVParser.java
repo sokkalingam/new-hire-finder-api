@@ -17,7 +17,7 @@ public class CSVParser {
 
     public static Collection<Contact> parse() throws IOException {
 
-        Reader in = new FileReader("/Users/sokkalingam.subraman/Downloads/17k-sample_with_predictions.csv");
+        Reader in = new FileReader("src/main/resources/17k-sample_with_predictions.csv");
         Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
         Collection<Contact> empList = new ArrayList<>();
         for (CSVRecord record : records) {
@@ -33,7 +33,7 @@ public class CSVParser {
 //            contact.setLng(record.get("long"));
             contact.setLat(String.valueOf(RandomUtils.nextDouble(15, 45)));
             contact.setLng("-" + String.valueOf(RandomUtils.nextDouble(55, 85)));
-            contact.setScore(Double.parseDouble(record.get("pred_probability")) * 100);
+            contact.setScore(Double.parseDouble(record.get("pred_probability")));
             empList.add(contact);
         }
 
