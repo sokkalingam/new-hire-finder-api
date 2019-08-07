@@ -91,7 +91,7 @@ public class SearchService {
         processInput(searchInput);
 
         for (Contact item : allContacts) {
-            if (contactMap.size() <= 100 && StringUtils.isNotBlank(item.getLat()) && StringUtils.isNotBlank(item.getLng()) &&
+            if (StringUtils.isNotBlank(item.getLat()) && StringUtils.isNotBlank(item.getLng()) &&
                     item.getScore() >= searchInput.getScore()
                     && StringUtils.containsIgnoreCase(item.getCompanyName(), searchInput.getCompanyName())
                     && StringUtils.containsIgnoreCase(item.getJobTitle(), searchInput.getJobTitle())) {
