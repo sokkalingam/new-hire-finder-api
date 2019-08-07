@@ -33,7 +33,7 @@ public class CSVParser {
 //            contact.setLng(record.get("long"));
             contact.setLat(String.valueOf(RandomUtils.nextDouble(15, 45)));
             contact.setLng("-" + String.valueOf(RandomUtils.nextDouble(55, 85)));
-            contact.setScore(Double.parseDouble(record.get("pred_probability")));
+            contact.setScore(Double.parseDouble(record.get("pred_probability")) * 100);
             empList.add(contact);
         }
 
