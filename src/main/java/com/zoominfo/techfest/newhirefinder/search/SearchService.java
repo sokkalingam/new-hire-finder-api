@@ -63,10 +63,10 @@ public class SearchService {
 
     public Collection<Contact> getContacts(SearchInput searchInput) {
 
-        Map<Double, Contact> contactMap = new TreeMap<>(Collections.reverseOrder());
+        List<Contact> contactList = new ArrayList<>();
 
         if (searchInput == null)
-            return contactMap.values();
+            return contactList;
 
         processInput(searchInput);
 
@@ -74,11 +74,11 @@ public class SearchService {
             if (item.getScore() >= searchInput.getScore()
                     && StringUtils.containsIgnoreCase(item.getCompanyName(), searchInput.getCompanyName())
                     && StringUtils.containsIgnoreCase(item.getJobTitle(), searchInput.getJobTitle())) {
-                contactMap.put(item.getScore(), item);
+                contactList.add(item);
             }
         }
 
-        return contactMap.values();
+        return contactList;
     }
 
     public Collection<Contact> getContactsForMap(SearchInput searchInput) {
