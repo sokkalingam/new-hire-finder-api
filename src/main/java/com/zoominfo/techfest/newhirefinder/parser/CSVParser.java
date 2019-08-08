@@ -4,23 +4,20 @@ import com.zoominfo.techfest.newhirefinder.model.Contact;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.RandomUtils;
-import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
 
 public class CSVParser {
 
     public static Collection<Contact> parse() throws IOException {
 
-        Reader in = new FileReader("src/main/resources/17k-sample_with_predictions.csv");
+        Reader in = new FileReader("src/main/resources/16k-sample_with_predictions_with_lat_lng.csv");
         Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
         Collection<Contact> empList = new ArrayList<>();
 
@@ -33,13 +30,16 @@ public class CSVParser {
             contact.setPhone(record.get("phone"));
             contact.setEmail(record.get("email"));
             contact.setJobTitle(record.get("current_role_title"));
-            contact.setAvgTimeInPosition(record.get("log_average_time_in_position"));
-            contact.setChangedAJobLastYear(record.get("changed_a_job_last_year"));
+
+            long avgTimeInPos = Math.round(Double.parseDouble(record.get("log_average_time_in_position")));
+            contact.setAvgTimeInPosition(String.valueOf(
+                    avgTimeInPos < 1 ? 1 : avgTimeInPos
+            ));
+
+            contact.setChangedAJobLastYear(record.get("changed_a_job_last_year") == "1" ? "Yes" : "No");
             contact.setNumJobChangesLast10Years(record.get("num_job_changes_last_10years"));
-//            contact.setLat(record.get("lat"));
-//            contact.setLng(record.get("long"));
-            contact.setLat(String.valueOf(RandomUtils.nextDouble(15, 45)));
-            contact.setLng("-" + String.valueOf(RandomUtils.nextDouble(55, 85)));
+            contact.setLat(record.get("new_lat"));
+            contact.setLng(record.get("new_lon"));
             contact.setScore(round(Double.parseDouble(record.get("pred_probability")) * 100, 2));
             empList.add(contact);
         }
@@ -47,7 +47,7 @@ public class CSVParser {
         return empList;
     }
 
-    private static double round(double value, int places) {
+    public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
         BigDecimal bd = new BigDecimal(Double.toString(value));
