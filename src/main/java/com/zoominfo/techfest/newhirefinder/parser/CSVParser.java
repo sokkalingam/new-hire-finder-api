@@ -41,6 +41,7 @@ public class CSVParser {
             contact.setLat(record.get("new_lat"));
             contact.setLng(record.get("new_lon"));
             contact.setScore(round(Double.parseDouble(record.get("pred_probability")) * 100, 2));
+            contact.setAbsScore(Double.parseDouble(record.get("pred_probability")) * 10000);
             empList.add(contact);
         }
 
