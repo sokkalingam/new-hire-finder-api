@@ -6,6 +6,7 @@ public class Contact {
     private String companyName;
     private String phone;
     private String email;
+    private Double absScore;
     private Double score;
     private String jobTitle;
     private String lat;
@@ -100,6 +101,14 @@ public class Contact {
 
     public void setNumJobChangesLast10Years(String numJobChangesLast10Years) {
         this.numJobChangesLast10Years = numJobChangesLast10Years;
+    }
+
+    public Double getAbsScore() {
+        return absScore;
+    }
+
+    public void setAbsScore(Double absScore) {
+        this.absScore = absScore;
     }
 
     @Override
