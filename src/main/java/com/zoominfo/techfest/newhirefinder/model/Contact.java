@@ -1,5 +1,7 @@
 package com.zoominfo.techfest.newhirefinder.model;
 
+import java.util.Objects;
+
 public class Contact {
 
     private String name;
@@ -124,5 +126,29 @@ public class Contact {
         sb.append(", lng='").append(lng).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return name.equals(contact.name) &&
+                companyName.equals(contact.companyName) &&
+                phone.equals(contact.phone) &&
+                email.equals(contact.email) &&
+                absScore.equals(contact.absScore) &&
+                score.equals(contact.score) &&
+                jobTitle.equals(contact.jobTitle) &&
+                lat.equals(contact.lat) &&
+                lng.equals(contact.lng) &&
+                avgTimeInPosition.equals(contact.avgTimeInPosition) &&
+                changedAJobLastYear.equals(contact.changedAJobLastYear) &&
+                numJobChangesLast10Years.equals(contact.numJobChangesLast10Years);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, companyName, phone, email, absScore, score, jobTitle, lat, lng, avgTimeInPosition, changedAJobLastYear, numJobChangesLast10Years);
     }
 }
