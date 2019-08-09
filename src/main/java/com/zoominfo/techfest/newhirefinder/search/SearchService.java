@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -63,10 +66,10 @@ public class SearchService {
 
     public Collection<Contact> getContacts(SearchInput searchInput) {
 
-        List<Contact> contactList = new ArrayList<>();
+        List<Contact> collection = new ArrayList<>();
 
         if (searchInput == null)
-            return contactList;
+            return collection;
 
         processInput(searchInput);
 
@@ -74,11 +77,16 @@ public class SearchService {
             if (item.getScore() >= searchInput.getScore()
                     && StringUtils.containsIgnoreCase(item.getCompanyName(), searchInput.getCompanyName())
                     && StringUtils.containsIgnoreCase(item.getJobTitle(), searchInput.getJobTitle())) {
-                contactList.add(item);
+                collection.add(item);
             }
         }
 
-        return contactList;
+        Collections.sort(collection, (a, b) -> {
+            if (a.getAbsScore() < b.getAbsScore()) return 1;
+            if (a.getAbsScore() > b.getAbsScore()) return -1;
+            return 0;
+        });
+        return collection;
     }
 
     public Collection<Contact> getContactsForMap(SearchInput searchInput) {
